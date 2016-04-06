@@ -1,45 +1,28 @@
-'use strict';
+'use strict'
 
-const http = require('http');
-const __CONFIG__ = require('./config');
-const Bot = require('@kikinteractive/kik');
-const request = require('superagent');
-const logger = require('./utils/logger');
+const http = require('http')
+const __CONFIG__ = require('./config')
+const Bot = require('@kikinteractive/kik')
+const request = require('superagent')
+const logger = require('./utils/logger')
+const hooks = require('./lib/hooks')
 
-// Configure the bot API endpoint, details for your bot
+// configure the bot API endpoint, details for your bot
 const bot = new Bot({
   username: __CONFIG__.kik.botUsername,
   apiKey: __CONFIG__.kik.apiKey,
-  baseUrl: __CONFIG__.kik.baseUrl,
-});
+  baseUrl: __CONFIG__.kik.baseUrl
+})
 
-// initial authentication
-request('POST', 'https://api.kik.com/v1/config')
-  .auth(__CONFIG__.kik.botUsername, __CONFIG__.kik.apiKey)
-  .send({
-    "webhook": __CONFIG__.kik.webhook,
-    "features": {
-       "manuallySendReadReceipts": false,
-       "receiveReadReceipts": false,
-       "receiveDeliveryReceipts": false,
-       "receiveIsTyping": false
-    }
-  })
-  .end((err, resp) => {
-    if (err) {
-      return logger.log('error', err);
-    }
+// updates configuration and auth
+bot.updateBotConfiguration()
 
-    logger.log('info', 'authentication success')
-  });
-
-bot.onTextMessage((message) => {
-  logger.log('info', message)
-
-  message.reply(message.body);
-});
+// incoming message handlers
+hooks(bot)
 
 // Set up your server and start listening
 let server = http
   .createServer(bot.incoming())
-  .listen(__CONFIG__.port);
+  .listen(__CONFIG__.port, () => {
+    logger.log('info', `🙌  => server running on port ${__CONFIG__.port}`)
+  })
