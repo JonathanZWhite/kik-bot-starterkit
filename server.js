@@ -1,5 +1,6 @@
 'use strict';
 
+const http = require('http');
 const __CONFIG__ = require('./config');
 const Bot = require('@kikinteractive/kik');
 const request = require('superagent');
@@ -16,7 +17,7 @@ const bot = new Bot({
 request('POST', 'https://api.kik.com/v1/config')
   .auth(__CONFIG__.kik.botUsername, __CONFIG__.kik.apiKey)
   .send({
-    "webhook": "http://d3344583.ngrok.io/incoming",
+    "webhook": __CONFIG__.kik.webhook,
     "features": {
        "manuallySendReadReceipts": false,
        "receiveReadReceipts": false,
@@ -33,7 +34,7 @@ request('POST', 'https://api.kik.com/v1/config')
   });
 
 bot.onTextMessage((message) => {
-  console.log('========= RECEIVED MESSAGE:', message);
+  logger.log('info', message)
 
   message.reply(message.body);
 });
@@ -41,4 +42,4 @@ bot.onTextMessage((message) => {
 // Set up your server and start listening
 let server = http
   .createServer(bot.incoming())
-  .listen(process.env.PORT || 8080);
+  .listen(__CONFIG__.port);
