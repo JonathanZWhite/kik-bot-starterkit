@@ -17,7 +17,7 @@ const bot = new Bot({
 request('POST', 'https://api.kik.com/v1/config')
   .auth(__CONFIG__.kik.botUsername, __CONFIG__.kik.apiKey)
   .send({
-    "webhook": __CONFIG__.kik.webhook,
+    "webhook": __CONFIG__.kik.webhook + '/incoming',
     "features": {
        "manuallySendReadReceipts": false,
        "receiveReadReceipts": false,
@@ -33,8 +33,9 @@ request('POST', 'https://api.kik.com/v1/config')
     logger.log('info', 'authentication success')
   });
 
+// proof of successful connection
 bot.onTextMessage((message) => {
-  logger.log('info', message)
+  logger.log('info', 'message received')
 
   message.reply(message.body);
 });
