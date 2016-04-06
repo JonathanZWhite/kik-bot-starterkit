@@ -4,7 +4,7 @@
   "description": "starter kit for building bots with kik",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "noddemon server.js"
   },
   "repository": {
     "type": "git",
