@@ -1,0 +1,27 @@
+{
+  "name": "kik-bot-starterkit",
+  "version": "1.0.0",
+  "description": "starter kit for building bots with kik",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonathanZWhite/kik-bot-startkit.git"
+  },
+  "author": "Jonathan White",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JonathanZWhite/kik-bot-startkit/issues"
+  },
+  "homepage": "https://github.com/JonathanZWhite/kik-bot-startkit#readme",
+  "devDependencies": {
+    "nodemon": "^1.9.1"
+  },
+  "dependencies": {
+    "@kikinteractive/kik": "^2.0.0",
+    "superagent": "^1.8.3",
+    "winston": "^2.2.0"
+  }
+}
