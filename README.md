@@ -1,4 +1,4 @@
-# kik-bot-startkit
+# kik-bot-starterkit
 Starter kit for building bots with Kik
 
 ### Getting started
